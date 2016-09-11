@@ -104,7 +104,7 @@ layouts = [
 
 # Define widget settings
 widget_defaults = dict(
-	font='monospace',
+	font="xft:monospace:size=9:bold:antialias=true",
 	fontsize=13,
 	padding=3,
 )
