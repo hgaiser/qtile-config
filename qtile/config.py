@@ -191,11 +191,13 @@ screens = [
 
 # Drag floating layouts.
 mouse = [
-	Drag([mod], "Button1", lazy.window.set_position_floating(),
+	Drag([mod], "Button1", lazy.window.set_position(),
 		start=lazy.window.get_position()),
 	Drag([mod], "Button3", lazy.window.set_size_floating(),
 		start=lazy.window.get_size()),
-	Click([mod], "Button2", lazy.window.bring_to_front())
+	Drag([mod], "Button2", lazy.window.set_position_floating(),
+		start=lazy.window.get_position()),
+	#Click([mod], "Button2", lazy.window.bring_to_front())
 ]
 
 # Misc settings
@@ -225,6 +227,7 @@ def autostart():
 	autostart_script = os.path.expanduser('~/.config/qtile/autostart.sh')
 	subprocess.call([autostart_script])
 
+# Float dialog windows
 @hook.subscribe.client_new
 def floating_dialogs(window):
 	dialog = window.window.get_wm_type() == 'dialog'
