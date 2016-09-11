@@ -110,6 +110,8 @@ widget_defaults = dict(
 )
 
 # Define bars on screens
+battery_theme_path = os.path.expanduser("~/.config/qtile/icons/battery")
+battery_name = "BAT1"
 screens = [
 	Screen(
 		top=bar.Bar(
@@ -153,6 +155,8 @@ screens = [
 
 				# System tray
 				widget.Systray(),
+				widget.BatteryIcon(battery_name=battery_name, theme_path=battery_theme_path),
+				widget.Battery(battery_name=battery_name, low_percentage=0.1, format="{percent:2.0%}"),
 				widget.Sep(padding=15),
 
 				# Clock
