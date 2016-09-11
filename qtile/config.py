@@ -222,5 +222,12 @@ wmname = "LG3D"
 # Autostart hook
 @hook.subscribe.startup_once
 def autostart():
-    autostart_script = os.path.expanduser('~/.config/qtile/autostart.sh')
-    subprocess.call([autostart_script])
+	autostart_script = os.path.expanduser('~/.config/qtile/autostart.sh')
+	subprocess.call([autostart_script])
+
+@hook.subscribe.client_new
+def floating_dialogs(window):
+	dialog = window.window.get_wm_type() == 'dialog'
+	transient = window.window.get_wm_transient_for()
+	if dialog or transient:
+		window.floating = True
