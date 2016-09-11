@@ -89,6 +89,7 @@ for key, name in groups_info:
 		Key([mod, "shift"], key, lazy.window.togroup(name))
 	)
 
+# Define layout color settings
 layout_color = dict(
 	border_focus  = '#004d99',
 	border_normal = "#222222",
@@ -102,59 +103,78 @@ layouts = [
 	layout.Zoomy(**layout_color)
 ]
 
+# Define GroupBox settings
+group_settings = dict(
+	borderwidth                = 1,
+	highlight_method           = "block",
+	inactive                   = "#737373",
+	this_current_screen_border = "#2a52a2",
+	other_screen_border        = "#00171F",
+)
+
 # Define widget settings
 widget_defaults = dict(
-	font="xft:monospace:size=9:bold:antialias=true",
-	fontsize=13,
-	padding=3,
+	font     = "xft:monospace:size = 9:bold:antialias = true",
+	fontsize = 13,
+	padding  = 3,
+)
+
+# Define graph settings
+graph_settings = dict(
+	line_width = 1,
+)
+
+# Define separator settings
+separator_settings = dict(
+	padding = 15,
+)
+
+# Define battery widget settings
+battery_name = "BAT1"
+battery_settings   = dict(
+	battery_name   = battery_name,
+	low_percentage = 0.1,
+	format         = "{percent:2.0%}",
+)
+battery_icon_settings = dict(
+	battery_name = battery_name,
+	theme_path   = os.path.expanduser("~/.config/qtile/icons/battery"),
 )
 
 def get_bar():
 	return bar.Bar(
 		[
 			# Groups
-			widget.GroupBox(
-				borderwidth=1,
-				highlight_method="block",
-				inactive="#737373",
-				this_current_screen_border="#2a52a2",
-				other_screen_border="#00171F",
-			),
-			widget.Sep(padding=15),
+			widget.GroupBox(**group_settings),
+			widget.Sep(**separator_settings),
 
 			# Current layout
 			widget.CurrentLayout(),
-			widget.Sep(padding=15),
+			widget.Sep(**separator_settings),
 
 			# Current window
 			widget.WindowName(),
 
 			# CPU usage graph
 			widget.Image(filename="~/.config/qtile/icons/cpu.png"),
-			widget.CPUGraph(
-				line_width=1,
-			),
-			widget.Sep(padding=15),
+			widget.CPUGraph(**graph_settings),
+			widget.Sep(**separator_settings),
 
 			# Memory usage graph
 			widget.Image(filename="~/.config/qtile/icons/memory.png"),
-			widget.MemoryGraph(
-				line_width=1,
-			),
-			widget.Sep(padding=15),
+			widget.MemoryGraph(**graph_settings),
+			widget.Sep(**separator_settings),
 
 			# Network usage graph
 			widget.Image(filename="~/.config/qtile/icons/lan.png"),
-			widget.NetGraph(
-				line_width=1,
-			),
-			widget.Sep(padding=15),
+			widget.NetGraph(**graph_settings),
+			widget.Sep(**separator_settings),
 
 			# System tray
 			widget.Systray(),
-			widget.BatteryIcon(battery_name=battery_name, theme_path=battery_theme_path),
-			widget.Battery(battery_name=battery_name, low_percentage=0.1, format="{percent:2.0%}"),
-			widget.Sep(padding=15),
+			widget.BatteryIcon(**battery_icon_settings),
+			widget.Battery(**battery_settings),
+			widget.Sep(**separator_settings),
 
 			# Clock
 			widget.Clock(format='%Y-%m-%d  %I:%M %p'),
@@ -164,8 +184,6 @@ def get_bar():
 	)
 
 # Define bars on screens
-battery_theme_path = os.path.expanduser("~/.config/qtile/icons/battery")
-battery_name = "BAT1"
 screens = [
 	Screen(top=get_bar()),
 	Screen(top=get_bar()),
