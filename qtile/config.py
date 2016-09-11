@@ -109,63 +109,66 @@ widget_defaults = dict(
 	padding=3,
 )
 
+def get_bar():
+	return bar.Bar(
+		[
+			# Groups
+			widget.GroupBox(
+				borderwidth=1,
+				highlight_method="block",
+				inactive="#737373",
+				this_current_screen_border="#2a52a2",
+				other_screen_border="#00171F",
+			),
+			widget.Sep(padding=15),
+
+			# Current layout
+			widget.CurrentLayout(),
+			widget.Sep(padding=15),
+
+			# Current window
+			widget.WindowName(),
+
+			# CPU usage graph
+			widget.Image(filename="~/.config/qtile/icons/cpu.png"),
+			widget.CPUGraph(
+				line_width=1,
+			),
+			widget.Sep(padding=15),
+
+			# Memory usage graph
+			widget.Image(filename="~/.config/qtile/icons/memory.png"),
+			widget.MemoryGraph(
+				line_width=1,
+			),
+			widget.Sep(padding=15),
+
+			# Network usage graph
+			widget.Image(filename="~/.config/qtile/icons/lan.png"),
+			widget.NetGraph(
+				line_width=1,
+			),
+			widget.Sep(padding=15),
+
+			# System tray
+			widget.Systray(),
+			widget.BatteryIcon(battery_name=battery_name, theme_path=battery_theme_path),
+			widget.Battery(battery_name=battery_name, low_percentage=0.1, format="{percent:2.0%}"),
+			widget.Sep(padding=15),
+
+			# Clock
+			widget.Clock(format='%Y-%m-%d  %I:%M %p'),
+		],
+		25,
+		background="#00394d",
+	)
+
 # Define bars on screens
 battery_theme_path = os.path.expanduser("~/.config/qtile/icons/battery")
 battery_name = "BAT1"
 screens = [
-	Screen(
-		top=bar.Bar(
-			[
-				# Groups
-				widget.GroupBox(
-					borderwidth=1,
-					highlight_method="block",
-					inactive="#737373",
-					this_current_screen_border="#2a52a2",
-				),
-				widget.Sep(padding=15),
-
-				# Current layout
-				widget.CurrentLayout(),
-				widget.Sep(padding=15),
-
-				# Current window
-				widget.WindowName(),
-
-				# CPU usage graph
-				widget.Image(filename="~/.config/qtile/icons/cpu.png"),
-				widget.CPUGraph(
-					line_width=1,
-				),
-				widget.Sep(padding=15),
-
-				# Memory usage graph
-				widget.Image(filename="~/.config/qtile/icons/memory.png"),
-				widget.MemoryGraph(
-					line_width=1,
-				),
-				widget.Sep(padding=15),
-
-				# Network usage graph
-				widget.Image(filename="~/.config/qtile/icons/lan.png"),
-				widget.NetGraph(
-					line_width=1,
-				),
-				widget.Sep(padding=15),
-
-				# System tray
-				widget.Systray(),
-				widget.BatteryIcon(battery_name=battery_name, theme_path=battery_theme_path),
-				widget.Battery(battery_name=battery_name, low_percentage=0.1, format="{percent:2.0%}"),
-				widget.Sep(padding=15),
-
-				# Clock
-				widget.Clock(format='%Y-%m-%d  %I:%M %p'),
-			],
-			25,
-			background="#00394d",
-		),
-	),
+	Screen(top=get_bar()),
+	Screen(top=get_bar()),
 ]
 
 # Drag floating layouts.
