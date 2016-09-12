@@ -44,10 +44,10 @@ keys = [
 		lazy.layout.swap_main()
 	),
 
-	# Swap panes of split stack
+	# Reset layout.
 	Key(
 		[mod, "shift"], "space",
-		lazy.layout.rotate()
+		lazy.layout.reset()
 	),
 
 	# Move focus to primary screen
