@@ -18,6 +18,16 @@ keys = [
 		lazy.layout.previous()
 	),
 
+	# Grow or shrink current window
+	Key(
+		[mod], "Up",
+		lazy.layout.grow()
+	),
+	Key(
+		[mod], "Down",
+		lazy.layout.shrink()
+	),
+
 	# Move windows up or down in current stack
 	Key(
 		[mod, "shift"], "Right",
@@ -34,10 +44,22 @@ keys = [
 		lazy.layout.swap_main()
 	),
 
-	# Swap panes of split stack
+	# Reset layout.
 	Key(
 		[mod, "shift"], "space",
-		lazy.layout.rotate()
+		lazy.layout.reset()
+	),
+
+	# Move focus to primary screen
+	Key(
+		[mod], "e",
+		lazy.to_screen(0)
+	),
+
+	# Move focus to secondary screen
+	Key(
+		[mod], "w",
+		lazy.to_screen(1)
 	),
 
 	# Spawn terminal
@@ -70,7 +92,8 @@ groups_info = [
 	("6", "misc"),
 	("7", "viz"),
 	("8", "8"),
-	("9", "9")
+	("9", "9"),
+	("0", "0"),
 ]
 
 # Create groups
@@ -97,10 +120,10 @@ layout_color = dict(
 
 # Define layouts
 layouts = [
-	layout.MonadTall(**layout_color),
-	layout.Matrix(**layout_color),
-	layout.Wmii(**layout_color),
-	layout.Zoomy(**layout_color)
+	layout.MonadTall(name="Tall", **layout_color),
+	layout.Matrix(name="Matrix", **layout_color),
+	layout.Wmii(name="Stack", **layout_color),
+	layout.Zoomy(name="Zoomy", **layout_color)
 ]
 
 # Define GroupBox settings
@@ -108,8 +131,9 @@ group_settings = dict(
 	borderwidth                = 1,
 	highlight_method           = "block",
 	inactive                   = "#737373",
-	this_current_screen_border = "#2a52a2",
+	this_current_screen_border = "#3492B3",
 	other_screen_border        = "#00171F",
+	disable_drag               = True,
 )
 
 # Define widget settings
@@ -180,7 +204,7 @@ def get_bar():
 			widget.Clock(format='%Y-%m-%d  %I:%M %p'),
 		],
 		25,
-		background="#00394d",
+		background=["#00394d", "#104E63"],
 	)
 
 # Define bars on screens
