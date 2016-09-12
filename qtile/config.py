@@ -192,14 +192,14 @@ mouse = [
 ]
 
 # Misc settings
-dgroups_key_binder = None
-dgroups_app_rules = []
-main = None
-follow_mouse_focus = False
-bring_front_click = True
-cursor_warp = False
-floating_layout = layout.Floating()
-auto_fullscreen = False
+dgroups_key_binder         = None
+dgroups_app_rules          = []
+main                       = None
+follow_mouse_focus         = False
+bring_front_click          = True
+cursor_warp                = False
+floating_layout            = layout.Floating()
+auto_fullscreen            = False
 focus_on_window_activation = "smart"
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
