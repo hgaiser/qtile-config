@@ -18,6 +18,16 @@ keys = [
 		lazy.layout.previous()
 	),
 
+	# Grow or shrink current window
+	Key(
+		[mod], "Up",
+		lazy.layout.grow()
+	),
+	Key(
+		[mod], "Down",
+		lazy.layout.shrink()
+	),
+
 	# Move windows up or down in current stack
 	Key(
 		[mod, "shift"], "Right",
