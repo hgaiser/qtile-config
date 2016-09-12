@@ -40,6 +40,18 @@ keys = [
 		lazy.layout.rotate()
 	),
 
+	# Move focus to primary screen
+	Key(
+		[mod], "e",
+		lazy.to_screen(0)
+	),
+
+	# Move focus to secondary screen
+	Key(
+		[mod], "w",
+		lazy.to_screen(1)
+	),
+
 	# Spawn terminal
 	Key([mod], "Return", lazy.spawn("urxvt")),
 
