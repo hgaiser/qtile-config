@@ -39,7 +39,7 @@ keys = [
 	Key([mod], "Return", lazy.spawn("urxvt")),
 
 	# Kill current window
-	Key([mod], "q", lazy.window.kill()),
+	Key([mod], "c", lazy.window.kill()),
 
 	# Toggle floating status
 	Key([mod], "t", lazy.window.toggle_floating()),
