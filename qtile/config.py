@@ -120,7 +120,7 @@ group_settings = dict(
 	borderwidth                = 1,
 	highlight_method           = "block",
 	inactive                   = "#737373",
-	this_current_screen_border = "#2a52a2",
+	this_current_screen_border = "#3492B3",
 	other_screen_border        = "#00171F",
 	disable_drag               = True,
 )
@@ -193,7 +193,7 @@ def get_bar():
 			widget.Clock(format='%Y-%m-%d  %I:%M %p'),
 		],
 		25,
-		background="#00394d",
+		background=["#00394d", "#104E63"],
 	)
 
 # Define bars on screens
