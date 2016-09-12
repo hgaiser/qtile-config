@@ -9,64 +9,34 @@ mod = "mod4"
 
 keys = [
 	# Switch between windows in current stack pane
-	Key(
-		[mod], "Right",
-		lazy.layout.next()
-	),
-	Key(
-		[mod], "Left",
-		lazy.layout.previous()
-	),
+	Key([mod], "Right", lazy.layout.next()),
+	Key([mod], "Left", lazy.layout.previous()),
 
 	# Grow or shrink current window
-	Key(
-		[mod], "Up",
-		lazy.layout.grow()
-	),
-	Key(
-		[mod], "Down",
-		lazy.layout.shrink()
-	),
+	Key([mod], "Up", lazy.layout.grow()),
+	Key([mod], "Down", lazy.layout.shrink()),
 
 	# Move windows up or down in current stack
-	Key(
-		[mod, "shift"], "Right",
-		lazy.layout.shuffle_down()
-	),
-	Key(
-		[mod, "shift"], "Left",
-		lazy.layout.shuffle_up()
-	),
+	Key([mod, "shift"], "Right", lazy.layout.shuffle_down()),
+	Key([mod, "shift"], "Left", lazy.layout.shuffle_up()),
 
 	# Swap with main window
-	Key(
-		[mod, "shift"], "Return",
-		lazy.layout.swap_main()
-	),
-
-	# Reset layout.
-	Key(
-		[mod, "shift"], "space",
-		lazy.layout.reset()
-	),
-
-	# Move focus to primary screen
-	Key(
-		[mod], "e",
-		lazy.to_screen(0)
-	),
-
-	# Move focus to secondary screen
-	Key(
-		[mod], "w",
-		lazy.to_screen(1)
-	),
-
-	# Spawn terminal
-	Key([mod], "Return", lazy.spawn("urxvt")),
+	Key([mod, "shift"], "Return", lazy.layout.swap_main()),
 
 	# Toggle between different layouts as defined below
 	Key([mod], "space", lazy.next_layout()),
+
+	# Reset layout.
+	Key([mod, "shift"], "space", lazy.layout.reset()),
+
+	# Move focus to primary screen
+	Key([mod], "w", lazy.to_screen(0)),
+
+	# Move focus to secondary screen
+	Key([mod], "e", lazy.to_screen(1)),
+
+	# Spawn terminal
+	Key([mod], "Return", lazy.spawn("urxvt")),
 
 	# Kill current window
 	Key([mod], "q", lazy.window.kill()),
@@ -103,14 +73,10 @@ for key, name in groups_info:
 	groups.append(Group(name))
 
 	# mod1 + letter of group = switch to group
-	keys.append(
-		Key([mod], key, lazy.group[name].toscreen())
-	)
+	keys.append(Key([mod], key, lazy.group[name].toscreen()))
 
 	# mod1 + shift + letter of group = switch to & move focused window to group
-	keys.append(
-		Key([mod, "shift"], key, lazy.window.togroup(name))
-	)
+	keys.append(Key([mod, "shift"], key, lazy.window.togroup(name)))
 
 # Define layout color settings
 layout_color = dict(
