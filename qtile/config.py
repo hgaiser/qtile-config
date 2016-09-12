@@ -97,10 +97,10 @@ layout_color = dict(
 
 # Define layouts
 layouts = [
-	layout.MonadTall(**layout_color),
-	layout.Matrix(**layout_color),
-	layout.Wmii(**layout_color),
-	layout.Zoomy(**layout_color)
+	layout.MonadTall(name="Tall", **layout_color),
+	layout.Matrix(name="Matrix", **layout_color),
+	layout.Wmii(name="Stack", **layout_color),
+	layout.Zoomy(name="Zoomy", **layout_color)
 ]
 
 # Define GroupBox settings
