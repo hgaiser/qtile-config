@@ -110,6 +110,7 @@ group_settings = dict(
 	inactive                   = "#737373",
 	this_current_screen_border = "#2a52a2",
 	other_screen_border        = "#00171F",
+	disable_drag               = True,
 )
 
 # Define widget settings
