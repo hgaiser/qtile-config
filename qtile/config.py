@@ -146,21 +146,6 @@ def get_bar():
 			# Current window
 			widget.WindowName(),
 
-			# CPU usage graph
-			widget.Image(filename="~/.config/qtile/icons/cpu.png"),
-			widget.CPUGraph(**graph_settings),
-			widget.Sep(**separator_settings),
-
-			# Memory usage graph
-			widget.Image(filename="~/.config/qtile/icons/memory.png"),
-			widget.MemoryGraph(**graph_settings),
-			widget.Sep(**separator_settings),
-
-			# Network usage graph
-			widget.Image(filename="~/.config/qtile/icons/lan.png"),
-			widget.NetGraph(**graph_settings),
-			widget.Sep(**separator_settings),
-
 			# System tray
 			widget.Systray(),
 			widget.BatteryIcon(**battery_icon_settings),
