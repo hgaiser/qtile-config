@@ -168,7 +168,7 @@ def get_bar():
 			widget.Sep(**separator_settings),
 
 			# Clock
-			widget.Clock(format='%Y-%m-%d  %I:%M %p'),
+			widget.Clock(format='%a %b %d %H:%M:%S'),
 		],
 		25,
 		background=["#00394d", "#104E63"],
