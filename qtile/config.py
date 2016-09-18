@@ -105,19 +105,9 @@ group_settings = dict(
 
 # Define widget settings
 widget_defaults = dict(
-	font     = "xft:monospace:size = 9:bold:antialias = true",
-	fontsize = 13,
-	padding  = 3,
-)
-
-# Define graph settings
-graph_settings = dict(
-	line_width = 1,
-)
-
-# Define separator settings
-separator_settings = dict(
-	padding = 15,
+	font     = "xft:DejaVu Sans Mono",
+	fontsize = 11,
+	padding  = 0,
 )
 
 def get_bar():
@@ -125,25 +115,25 @@ def get_bar():
 		[
 			# Groups
 			widget.GroupBox(**group_settings),
-			widget.Sep(**separator_settings),
+			widget.Spacer(length=8),
 
 			# Current layout
 			widget.CurrentLayout(),
-			widget.Sep(**separator_settings),
+			widget.Spacer(length=8),
 
 			# Current window
 			widget.WindowName(),
+			widget.Spacer(length=8),
 
 			# System tray
 			widget.Systray(),
-			widget.BatteryIcon(**battery_icon_settings),
-			widget.Battery(**battery_settings),
-			widget.Sep(**separator_settings),
+			widget.Spacer(length=8),
 
 			# Clock
 			widget.Clock(format='%a %b %d %H:%M:%S'),
+			widget.Spacer(length=8),
 		],
-		25,
+		16,
 		background=["#00394d", "#104E63"],
 	)
 
