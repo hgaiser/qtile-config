@@ -120,18 +120,6 @@ separator_settings = dict(
 	padding = 15,
 )
 
-# Define battery widget settings
-battery_name = "BAT1"
-battery_settings   = dict(
-	battery_name   = battery_name,
-	low_percentage = 0.1,
-	format         = "{percent:2.0%}",
-)
-battery_icon_settings = dict(
-	battery_name = battery_name,
-	theme_path   = os.path.expanduser("~/.config/qtile/icons/battery"),
-)
-
 def get_bar():
 	return bar.Bar(
 		[
