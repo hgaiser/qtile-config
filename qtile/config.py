@@ -49,11 +49,11 @@ keys = [
 	Key([mod], "t", lazy.window.toggle_floating()),
 
 	# Toggle fullscreen status
-	Key([mod], "f", lazy.window.toggle_fullscreen()),
+	Key([mod], "f", lazy.hide_show_bar()),
 
 	Key([mod, "shift"], "q", lazy.restart()),
 	#Key([mod, "control"], "q", lazy.shutdown()),
-	Key([mod], "d", lazy.spawn("dmenu_run -i -b -fn 'DejaVu Sans Book-10'")),
+	Key([mod], "r", lazy.spawn("dmenu_run -i -b -fn 'DejaVu Sans Mono'")),
 ]
 
 # Define groups (key, name)
