@@ -194,7 +194,7 @@ def get_bar(screen):
 			widget.Spacer(length=8),
 
 			# Clock
-			widget.Clock(format='%a %d %b %H:%M:%S', font='xft:monospace', fontsize=12, foreground='#ffaa00'),
+			widget.Clock(format='%a %d %b %Y %H:%M:%S', font='xft:monospace', fontsize=12, foreground='#ffaa00'),
 			widget.Spacer(length=8),
 		],
 		16,
