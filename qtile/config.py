@@ -40,7 +40,7 @@ keys = [
 	Key([mod], "e", lazy.to_screen(1)),
 
 	# Spawn terminal
-	Key([mod], "Return", lazy.spawn("urxvt")),
+	Key([mod], "Return", lazy.spawn("exo-open --launch TerminalEmulator")),
 
 	# Kill current window
 	Key([mod], "c", lazy.window.kill()),
