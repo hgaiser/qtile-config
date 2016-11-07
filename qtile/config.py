@@ -84,8 +84,9 @@ for key, name in groups_info:
 
 # Define layout color settings
 layout_color = dict(
-	border_focus  = '#004d99',
+	border_focus  = '#009900',
 	border_normal = "#222222",
+	border_width  = 1,
 )
 
 # Define layouts
