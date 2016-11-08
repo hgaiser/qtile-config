@@ -79,6 +79,9 @@ class MultiTextBox(base._Widget):
 			markup      = config['markup']
 		)
 
+	def updateSoon(self, *args, **kwargs):
+		self.qtile.call_soon(self.update, *args, **kwargs)
+
 	def update(self, *args, **kwargs):
 		texts = [self.__supplementConfig(x) for x in self.__formatter(self, self.qtile)]
 		self.__texts = [(x, self.__configToLayout(x)) for x in texts]
@@ -88,4 +91,4 @@ class MultiTextBox(base._Widget):
 		for hook in hooks:
 			if hook in self.__hooks: continue
 			self.__hooks.add(hook)
-			hook(self.update)
+			hook(self.updateSoon)
