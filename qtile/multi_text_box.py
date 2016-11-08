@@ -44,7 +44,7 @@ class MultiTextBox(base._Widget):
 
 	def _configure(self, qtile, bar):
 		base._Widget._configure(self, qtile, bar)
-		self.setup_hooks(self.__initial_hooks)
+		self.addHooks(self.__initial_hooks)
 		self.__initial_hooks = None
 
 	def calculate_length(self):
@@ -62,6 +62,15 @@ class MultiTextBox(base._Widget):
 			layout.draw(offset, int((self.bar.height - layout.height) / 2.0))
 			offset += layout.width
 		self.drawer.draw(offsetx = self.offsetx, width = self.width)
+
+	def textClicked(self, x, y):
+		''' Check which individual text was clicked. '''
+		offset = 0
+		for i, (_, layout) in enumerate(self.__texts):
+			if x <= offset + layout.width:
+				return i
+			offset += layout.width
+		return -1
 
 	def __supplementConfig(self, config):
 		result = dict(MultiTextBox.defaults)
@@ -87,8 +96,10 @@ class MultiTextBox(base._Widget):
 		self.__texts = [(x, self.__configToLayout(x)) for x in texts]
 		self.bar.draw()
 
-	def setup_hooks(self, hooks):
-		for hook in hooks:
-			if hook in self.__hooks: continue
-			self.__hooks.add(hook)
-			hook(self.updateSoon)
+	def addHook(self, hook):
+		if hook in self.__hooks: return
+		self.__hooks.add(hook)
+		hook(self.updateSoon)
+
+	def addHooks(self, hooks):
+		for hook in hooks: self.addHook(hook)
