@@ -175,7 +175,7 @@ update_hooks = [
 	hook.subscribe.window_name_change,
 ]
 
-def get_bar(screen):
+def makeBar(screen):
 	return bar.Bar(
 		[
 			# Groups
@@ -204,9 +204,14 @@ def get_bar(screen):
 
 # Define bars on screens
 screens = [
-	Screen(top=get_bar(0)),
-	Screen(top=get_bar(1)),
+	Screen(top=makeBar(0)),
 ]
+
+def makeScreensConfig(qtile):
+	''' Configure each screen found by qtile. '''
+	screens = len(qtile.conn.pseudoscreens)
+	return [Screen(top=makeBar(i)) for i in xrange(screens)]
+
 
 # Drag floating layouts.
 mouse = [
@@ -219,7 +224,6 @@ mouse = [
 # Misc settings
 dgroups_key_binder         = None
 dgroups_app_rules          = []
-main                       = None
 follow_mouse_focus         = False
 bring_front_click          = True
 cursor_warp                = False
@@ -234,3 +238,10 @@ def floating_dialogs(window):
 	transient = window.window.get_wm_transient_for()
 	if dialog or transient:
 		window.floating = True
+
+@hook.subscribe.screen_change
+def on_screen_change(qtile):
+	qtile.cmd_restart()
+
+def main(qtile):
+	qtile.config.screens = makeScreensConfig(qtile)
