@@ -41,6 +41,6 @@ class FlexibleGroupBox(MultiTextBox):
 
 	def __update(self, *args, **kwargs):
 		for group in self.qtile.groups:
-			result = self.__formatter(group, self.qtile)
+			result = self.__formatter(self, group, self.qtile)
 			if result is None: continue
 			yield result

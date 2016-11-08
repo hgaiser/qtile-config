@@ -131,41 +131,38 @@ def groupColors(screen, focus, windows, urgents):
 	if windows:           return black,       fade((0.0, 0.6, 0.0))
 	return (0.0, 0.7, 0.0), (0.0, 0.2, 0.0)
 
-def makeGroupFormatter(screen):
-	def format(group, qtile):
-		focus = qtile.currentScreen.index == screen
-		urgents = filter(lambda x: x.urgent, group.windows)
-		fg, bg = groupColors(group.screen, focus, len(group.windows), 0)
-		return dict(
-			text      = ' {} '.format(group.name),
-			fg_colour = toQtileColor(fg),
-			bg_colour = toQtileColor(bg),
-		)
-	return format
+def formatGroup(widget, group, qtile):
+	screen = widget.bar.screen
+	focus = qtile.currentScreen == screen
+	urgents = filter(lambda x: x.urgent, group.windows)
+	fg, bg = groupColors(group.screen, focus, len(group.windows), 0)
+	return dict(
+		text      = ' {} '.format(group.name),
+		fg_colour = toQtileColor(fg),
+		bg_colour = toQtileColor(bg),
+	)
 
-def makeLayoutFormatter(screen):
-	def format(widget, qtile):
-		focus = qtile.currentScreen.index == screen
-		group = qtile.screens[screen].group
-		text  = group.layout.name if group else ''
-		return [dict(
-			text      = ' {} '.format(text),
-			fg_colour = '#ffaa00' if focus else '#b0b0b0',
-			bg_colour = toQtileColor(background(screenColor(screen))),
-		)]
-	return format
+def formatLayout(widget, qtile):
+	screen = widget.bar.screen
+	focus = qtile.currentScreen == screen
+	group = screen.group
+	text  = group.layout.name if group else ''
+	return [dict(
+		text      = ' {} '.format(text),
+		fg_colour = '#ffaa00' if focus else '#b0b0b0',
+		bg_colour = toQtileColor(background(screenColor(screen.index))),
+	)]
 
-def makeTitleFormatter(screen):
-	def format(widget, qtile):
-		focus  = qtile.currentScreen.index == screen
-		group  = qtile.screens[screen].group
-		window = group.currentWindow if group else None
-		text   = window.name if window and window.name else ''
-		return [dict(
-			text      = ' {} '.format(text.encode('utf-8')),
-			fg_colour = toQtileColor(highlight(screenColor(screen))) if focus else '#bbbbbb',
-		)]
-	return format
+def formatTitle(widget, qtile):
+	screen = widget.bar.screen
+	focus  = qtile.currentScreen == screen
+	group  = screen.group
+	window = group.currentWindow if group else None
+	text   = window.name if window and window.name else ''
+	return [dict(
+		text      = ' {} '.format(text.encode('utf-8')),
+		fg_colour = toQtileColor(highlight(screenColor(screen.index))) if focus else '#bbbbbb',
+	)]
 
 update_hooks = [
 	hook.subscribe.changegroup,
@@ -179,15 +176,15 @@ def makeBar(screen):
 	return bar.Bar(
 		[
 			# Groups
-			FlexibleGroupBox(makeGroupFormatter(screen), font_size=12),
+			FlexibleGroupBox(formatGroup, font_size=12),
 			widget.Spacer(length=8),
 
 			# Current layout
-			MultiTextBox(formatter=makeLayoutFormatter(screen), hooks=update_hooks, font_size=12),
+			MultiTextBox(formatLayout, hooks=update_hooks, font_size=12),
 			widget.Spacer(length=8),
 
 			# Current window
-			MultiTextBox(formatter=makeTitleFormatter(screen), hooks=update_hooks, font_size=12),
+			MultiTextBox(formatTitle, hooks=update_hooks, font_size=12),
 			widget.Spacer(length=bar.STRETCH),
 
 			# System tray
