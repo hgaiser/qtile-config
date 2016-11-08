@@ -44,3 +44,8 @@ class FlexibleGroupBox(MultiTextBox):
 			result = self.__formatter(self, group, self.qtile)
 			if result is None: continue
 			yield result
+
+	def button_press(self, x, y, button):
+		group = self.textClicked(x, y)
+		if button == 1:
+			self.bar.screen.setGroup(self.qtile.groups[group])
