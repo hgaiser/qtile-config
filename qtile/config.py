@@ -33,11 +33,12 @@ keys = [
 	# Reset layout.
 	Key([mod, "shift"], "space", lazy.layout.reset()),
 
-	# Move focus to primary screen
+	# Move focus to screen
 	Key([mod], "w", lazy.to_screen(0)),
-
-	# Move focus to secondary screen
 	Key([mod], "e", lazy.to_screen(1)),
+	# Move window to screen
+	Key([mod, "shift"], "w", lazy.window.toscreen(0)),
+	Key([mod, "shift"], "e", lazy.window.toscreen(1)),
 
 	# Spawn terminal
 	Key([mod], "Return", lazy.spawn("exo-open --launch TerminalEmulator")),
