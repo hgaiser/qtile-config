@@ -258,7 +258,7 @@ def makeBar(screen):
 		widget.Spacer(length=8),
 	])
 
-	return bar.Bar(widgets, 25, background=toQtileColor(background(screenColor(screen))))
+	return bar.Bar(widgets, 20, background=toQtileColor(background(screenColor(screen))))
 
 # Define bars on screens
 screens = [
