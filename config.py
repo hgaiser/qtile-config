@@ -161,7 +161,7 @@ def formatTitle(widget, qtile):
 	window = group.currentWindow if group else None
 	text   = window.name if window and window.name else ''
 	return [dict(
-		text      = ' {} '.format(text.encode('utf-8')),
+		text      = ' {} '.format(text),
 		fg_colour = toQtileColor(highlight(screenColor(screen.index))) if focus else '#bbbbbb',
 	)]
 
