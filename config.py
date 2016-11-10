@@ -56,7 +56,7 @@ keys = [
 
 	Key([mod, "shift"], "q", lazy.restart()),
 	#Key([mod, "control"], "q", lazy.shutdown()),
-	Key([mod], "r", lazy.spawn("dmenu_run -i -b -fn 'DejaVu Sans Mono'")),
+	Key([mod], "d", lazy.spawn("dmenu_run -i -b -fn 'DejaVu Sans Mono'")),
 ]
 
 # Define groups (key, name)
