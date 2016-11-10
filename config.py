@@ -208,7 +208,7 @@ screens = [
 def makeScreensConfig(qtile):
 	''' Configure each screen found by qtile. '''
 	screens = len(qtile.conn.pseudoscreens)
-	return [Screen(top=makeBar(i)) for i in xrange(screens)]
+	return [Screen(top=makeBar(i)) for i in range(screens)]
 
 
 # Drag floating layouts.
