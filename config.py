@@ -46,7 +46,7 @@ keys = [
 	Key([mod], "Return", lazy.spawn("exo-open --launch TerminalEmulator")),
 
 	# Kill current window
-	Key([mod], "c", lazy.window.kill()),
+	Key([mod], "q", lazy.window.kill()),
 
 	# Toggle floating status
 	Key([mod], "t", lazy.window.toggle_floating()),
