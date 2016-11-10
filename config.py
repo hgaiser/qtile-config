@@ -91,18 +91,18 @@ for key, name in groups_info:
 
 # Define layout color settings
 layout_color = dict(
-	border_focus  = '#009900',
+	border_focus  = '#004d99',
 	border_normal = "#222222",
-	border_width  = 1,
+	border_width  = 2,
 )
 
 # Define layouts
 layouts = [
-	layout.MonadTall(name="Tall",    **layout_color),
-	layout.Matrix(   name="Matrix",  **layout_color),
-	layout.Wmii(     name="Stack",   **layout_color),
-	layout.Zoomy(    name="Zoomy",   **layout_color),
-	layout.Max(      name="Full",    **layout_color),
+	layout.MonadTall(name="Tall",   **layout_color),
+	layout.Matrix(   name="Matrix", **layout_color),
+	layout.Wmii(     name="Stack",  **layout_color),
+	layout.Zoomy(    name="Zoomy",  **layout_color),
+	layout.Max(      name="Full",   **layout_color),
 ]
 
 white = (0, 1, 0)
@@ -113,7 +113,7 @@ def toQtileColor(hls):
 	return r * 255, g * 255, b * 255
 
 def screenColor(screen):
-	if screen == 0: return 120 / 360.0, 0.5, 0.5
+	if screen == 0: return 195 / 360.0, 0.25, 1.0
 	if screen == 1: return  30 / 360.0, 0.5, 0.5
 	if screen == 2: return 210 / 360.0, 0.5, 0.5
 	return                 270 / 360.0, 0.5, 0.5
@@ -128,7 +128,7 @@ def fade(hls):
 	return lsMultiply(hls, 0.7, 0.8)
 
 def highlight(hls):
-	return lsMultiply(hls, 1.0, 1.5)
+	return lsMultiply(hls, 1.0, 1.0)
 
 def groupColors(screen, focus, windows, urgents):
 	if urgents:           return white,       (0, 0.6, 0)
@@ -156,7 +156,7 @@ def formatLayout(widget, qtile):
 	text  = group.layout.name if group else ''
 	return [dict(
 		text      = ' {} '.format(text),
-		fg_colour = '#ffaa00' if focus else '#b0b0b0',
+		fg_colour = '#ffffff' if focus else '#b0b0b0',
 		bg_colour = toQtileColor(background(screenColor(screen.index))),
 	)]
 
@@ -168,7 +168,7 @@ def formatTitle(widget, qtile):
 	text   = window.name if window and window.name else ''
 	return [dict(
 		text      = ' {} '.format(text),
-		fg_colour = toQtileColor(highlight(screenColor(screen.index))) if focus else '#bbbbbb',
+		fg_colour = "#ffffff" if focus else '#bbbbbb',
 	)]
 
 update_hooks = [
