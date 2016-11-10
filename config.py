@@ -9,6 +9,8 @@ import subprocess
 from flexible_group_box import FlexibleGroupBox
 from multi_text_box import MultiTextBox
 
+import utils
+
 mod = "mod4"
 
 keys = [
@@ -173,32 +175,86 @@ update_hooks = [
 	hook.subscribe.window_name_change,
 ]
 
+# Define widget settings
+widget_defaults = dict(
+	font     = "xft:monospace:size = 9:bold:antialias = true",
+	fontsize = 13,
+	padding  = 3,
+)
+
+# Define graph settings
+graph_settings = dict(
+	line_width = 1,
+)
+
+# Define separator settings
+separator_settings = dict(
+	padding = 15,
+)
+
+# Define battery widget settings
+battery_name = utils.find_battery_name()
+battery_settings   = dict(
+	battery_name   = battery_name,
+	low_percentage = 0.1,
+	format         = "{percent:2.0%}",
+)
+battery_icon_settings = dict(
+	battery_name = battery_name,
+	theme_path   = os.path.expanduser("~/.config/qtile/icons/battery"),
+)
+
 def makeBar(screen):
-	return bar.Bar(
-		[
-			# Groups
-			FlexibleGroupBox(formatGroup, font_size=12),
-			widget.Spacer(length=8),
+	widgets = [
+		# Groups
+		FlexibleGroupBox(formatGroup, font_size=12),
+		widget.Sep(**separator_settings),
 
-			# Current layout
-			MultiTextBox(formatLayout, hooks=update_hooks, font_size=12),
-			widget.Spacer(length=8),
+		# Current layout
+		MultiTextBox(formatLayout, hooks=update_hooks, font_size=12),
+		widget.Sep(**separator_settings),
 
-			# Current window
-			MultiTextBox(formatTitle, hooks=update_hooks, font_size=12),
-			widget.Spacer(length=bar.STRETCH),
+		# Current window
+		MultiTextBox(formatTitle, hooks=update_hooks, font_size=12),
+		widget.Spacer(length=bar.STRETCH),
 
-			# System tray
-			widget.Systray(),
-			widget.Spacer(length=8),
+		# CPU usage graph
+		widget.Image(filename="~/.config/qtile/icons/cpu.png"),
+		widget.CPUGraph(**graph_settings),
+		widget.Sep(**separator_settings),
 
-			# Clock
-			widget.Clock(format='%a %d %b %Y %H:%M:%S', font='xft:monospace', fontsize=12, foreground='#ffaa00'),
-			widget.Spacer(length=8),
-		],
-		16,
-		background = toQtileColor(background(screenColor(screen))),
-	)
+		# Memory usage graph
+		widget.Image(filename="~/.config/qtile/icons/memory.png"),
+		widget.MemoryGraph(**graph_settings),
+		widget.Sep(**separator_settings),
+
+		# Network usage graph
+		widget.Image(filename="~/.config/qtile/icons/lan.png"),
+		widget.NetGraph(**graph_settings),
+		widget.Sep(**separator_settings),
+
+		# System tray
+		widget.Systray(),
+		widget.Spacer(length=8),
+
+	]
+
+	if battery_name is not None:
+		widgets.extend([
+			widget.BatteryIcon(**battery_icon_settings),
+			widget.Battery(**battery_settings),
+		])
+
+	widgets.extend([
+		# System tray separator
+		widget.Sep(**separator_settings),
+
+		# Clock
+		widget.Clock(format='%a %d %b %Y %H:%M:%S', font='xft:monospace', fontsize=12),
+		widget.Spacer(length=8),
+	])
+
+	return bar.Bar(widgets, 25, background=toQtileColor(background(screenColor(screen))))
 
 # Define bars on screens
 screens = [
