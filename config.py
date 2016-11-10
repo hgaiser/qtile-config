@@ -57,6 +57,10 @@ keys = [
 	Key([mod, "shift"], "q", lazy.restart()),
 	#Key([mod, "control"], "q", lazy.shutdown()),
 	Key([mod], "d", lazy.spawn("dmenu_run -i -b -fn 'DejaVu Sans Mono'")),
+
+	# Screenshots
+	Key(["shift"], "Print", lazy.spawn("xfce4-screenshooter")),
+	Key([], "Print", lazy.spawn("xfce4-screenshooter -f")),
 ]
 
 # Define groups (key, name)
