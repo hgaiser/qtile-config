@@ -161,7 +161,7 @@ def formatTitle(widget, qtile):
 	window = group.currentWindow if group else None
 	text   = window.name if window and window.name else ''
 	return [dict(
-		text      = ' {} '.format(text.encode('utf-8')),
+		text      = ' {} '.format(text),
 		fg_colour = toQtileColor(highlight(screenColor(screen.index))) if focus else '#bbbbbb',
 	)]
 
@@ -213,7 +213,7 @@ screens = [
 def makeScreensConfig(qtile):
 	''' Configure each screen found by qtile. '''
 	screens = len(qtile.conn.pseudoscreens)
-	return [Screen(top=makeBar(i)) for i in xrange(screens)]
+	return [Screen(top=makeBar(i)) for i in range(screens)]
 
 
 # Drag floating layouts.
