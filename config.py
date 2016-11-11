@@ -83,22 +83,6 @@ for key, name in groups_info:
 	# mod1 + shift + letter of group = switch to & move focused window to group
 	keys.append(Key([mod, "shift"], key, lazy.window.togroup(name)))
 
-# Define layout color settings
-layout_color = dict(
-	border_focus  = '#009900',
-	border_normal = "#222222",
-	border_width  = 1,
-)
-
-# Define layouts
-layouts = [
-	layout.MonadTall(name="Tall",    **layout_color),
-	layout.Matrix(   name="Matrix",  **layout_color),
-	layout.Wmii(     name="Stack",   **layout_color),
-	layout.Zoomy(    name="Zoomy",   **layout_color),
-	layout.Max(      name="Full",    **layout_color),
-]
-
 white = (0, 1, 0)
 black = (0, 0, 0)
 
@@ -106,9 +90,13 @@ def toQtileColor(hls):
 	r, g, b = hls_to_rgb(*hls)
 	return r * 255, g * 255, b * 255
 
+def toHexColor(hls):
+	r, g, b = hls_to_rgb(*hls)
+	return '#{:02x}{:02x}{:02x}'.format(int(r * 255), int(g * 255), int(b * 255))
+
 def screenColor(screen):
 	if screen == 0: return 120 / 360.0, 0.5, 0.5
-	if screen == 1: return  30 / 360.0, 0.5, 0.5
+	if screen == 1: return  40 / 360.0, 0.5, 0.5
 	if screen == 2: return 210 / 360.0, 0.5, 0.5
 	return                 270 / 360.0, 0.5, 0.5
 
@@ -123,6 +111,22 @@ def fade(hls):
 
 def highlight(hls):
 	return lsMultiply(hls, 1.0, 1.5)
+
+# Define layout color settings
+layout_color = dict(
+	border_focus  = toHexColor(fade(screenColor(0))),
+	border_normal = toHexColor(fade(fade(white))),
+	border_width  = 1,
+)
+
+# Define layouts
+layouts = [
+	layout.MonadTall(name="Tall",    **layout_color),
+	layout.Matrix(   name="Matrix",  **layout_color),
+	layout.Wmii(     name="Stack",   **layout_color),
+	layout.Zoomy(    name="Zoomy",   **layout_color),
+	layout.Max(      name="Full",    **layout_color),
+]
 
 def groupColors(screen, focus, windows, urgents):
 	if urgents:           return white,       (0, 0.6, 0)
