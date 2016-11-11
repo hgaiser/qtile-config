@@ -174,31 +174,36 @@ update_hooks = [
 ]
 
 def makeBar(screen):
-	return bar.Bar(
-		[
-			# Groups
-			FlexibleGroupBox(formatGroup, font_size=12),
-			widget.Spacer(length=8),
+	widgets = [
+		# Groups
+		FlexibleGroupBox(formatGroup, font_size=12),
+		widget.Spacer(length=8),
 
-			# Current layout
-			MultiTextBox(formatLayout, hooks=update_hooks, font_size=12),
-			widget.Spacer(length=8),
+		# Current layout
+		MultiTextBox(formatLayout, hooks=update_hooks, font_size=12),
+		widget.Spacer(length=8),
 
-			# Current window
-			MultiTextBox(formatTitle, hooks=update_hooks, font_size=12),
-			widget.Spacer(length=bar.STRETCH),
+		# Current window
+		MultiTextBox(formatTitle, hooks=update_hooks, font_size=12),
+		widget.Spacer(length=bar.STRETCH),
+	]
 
+	if screen == 0:
+		widgets.extend([
 			# System tray
 			widget.Systray(),
 			widget.Spacer(length=8),
+		])
 
-			# Clock
-			widget.Clock(format='%a %d %b %Y %H:%M:%S', font='xft:monospace', fontsize=12, foreground='#ffaa00'),
-			widget.Spacer(length=8),
-		],
-		16,
-		background = toQtileColor(background(screenColor(screen))),
-	)
+	widgets.extend([
+		# Clock
+		widget.Clock(format='%a %d %b %Y %H:%M:%S', font='xft:monospace', fontsize=12, foreground='#ffaa00'),
+		widget.Spacer(length=8),
+	])
+
+	bg_color =  toQtileColor(background(screenColor(screen)))
+
+	return bar.Bar(widgets, 16, background=bg_color)
 
 # Define bars on screens
 screens = [
