@@ -114,7 +114,7 @@ def toQtileColor(hls):
 
 def screenColor(screen):
 	if screen == 0: return 195 / 360.0, 0.25, 1.0
-	if screen == 1: return  30 / 360.0, 0.5, 0.5
+	if screen == 1: return 140 / 360.0, 0.25, 1.0
 	if screen == 2: return 210 / 360.0, 0.5, 0.5
 	return                 270 / 360.0, 0.5, 0.5
 
@@ -122,27 +122,27 @@ def lsMultiply(hls, l, s):
 	return hls[0], hls[1] * l, hls[2] * s
 
 def background(hls):
-	return lsMultiply(hls, 0.4, 0.7)
+	return lsMultiply(hls, 0.6, 0.7)
 
 def fade(hls):
-	return lsMultiply(hls, 0.7, 0.8)
+	return lsMultiply(hls, 0.7, 0.6)
 
 def highlight(hls):
 	return lsMultiply(hls, 1.0, 1.0)
 
-def groupColors(screen, focus, windows, urgents):
-	if urgents:           return white,       (0, 0.6, 0)
-	if screen and focus:  return white,       screenColor(screen.index)
-	if screen:            return fade(white), fade(screenColor(screen.index))
-	if windows and focus: return black,       (0.0, 0.6, 0.0)
-	if windows:           return black,       fade((0.0, 0.6, 0.0))
-	return (0.0, 0.7, 0.0), (0.0, 0.2, 0.0)
+def groupColors(group_screen, bar_screen, focus, windows, urgents):
+	if urgents:                return white,       (0, 0.6, 0)
+	if group_screen and focus: return white,       screenColor(group_screen.index)
+	if group_screen:           return fade(white), fade(screenColor(group_screen.index))
+	if windows and focus:      return black,       (0.0, 0.4, 0.0)
+	if windows:                return black,       fade((0.0, 0.4, 0.0))
+	return (0.0, 0.7, 0.0), background(screenColor(bar_screen.index))
 
 def formatGroup(widget, group, qtile):
 	screen = widget.bar.screen
 	focus = qtile.currentScreen == screen
 	urgents = filter(lambda x: x.urgent, group.windows)
-	fg, bg = groupColors(group.screen, focus, len(group.windows), 0)
+	fg, bg = groupColors(group.screen, screen, focus, len(group.windows), 0)
 	return dict(
 		text      = ' {} '.format(group.name),
 		fg_colour = toQtileColor(fg),
