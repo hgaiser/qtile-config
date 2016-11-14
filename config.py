@@ -9,7 +9,7 @@ import subprocess
 from flexible_group_box import FlexibleGroupBox
 from multi_text_box import MultiTextBox
 
-import utils
+import util
 
 mod = "mod4"
 
@@ -201,7 +201,7 @@ separator_settings = dict(
 )
 
 # Define battery widget settings
-battery_name = utils.find_battery_name()
+battery_name = util.find_battery_name()
 battery_settings   = dict(
 	battery_name   = battery_name,
 	low_percentage = 0.1,
@@ -243,6 +243,13 @@ def makeBar(screen):
 	]
 
 	if screen == 0:
+		if battery_name:
+			widgets.extend([
+				# Battery widget
+				widget.BatteryIcon(**battery_icon_settings),
+				widget.Battery(**battery_settings),
+			])
+
 		widgets.extend([
 			# System tray
 			widget.Systray(),
