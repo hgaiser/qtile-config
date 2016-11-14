@@ -89,28 +89,16 @@ for key, name in groups_info:
 	# mod1 + shift + letter of group = switch to & move focused window to group
 	keys.append(Key([mod, "shift"], key, lazy.window.togroup(name)))
 
-# Define layout color settings
-layout_color = dict(
-	border_focus  = '#004d99',
-	border_normal = "#222222",
-	border_width  = 2,
-)
-
-# Define layouts
-layouts = [
-	layout.MonadTall(name="Tall",   **layout_color),
-	layout.Matrix(   name="Matrix", **layout_color),
-	layout.Wmii(     name="Stack",  **layout_color),
-	layout.Zoomy(    name="Zoomy",  **layout_color),
-	layout.Max(      name="Full",   **layout_color),
-]
-
 white = (0, 1, 0)
 black = (0, 0, 0)
 
 def toQtileColor(hls):
 	r, g, b = hls_to_rgb(*hls)
 	return r * 255, g * 255, b * 255
+
+def toHexColor(hls):
+	r, g, b = hls_to_rgb(*hls)
+	return '#{:02x}{:02x}{:02x}'.format(int(r * 255), int(g * 255), int(b * 255))
 
 def screenColor(screen):
 	if screen == 0: return 195 / 360.0, 0.25, 1.0
@@ -129,6 +117,22 @@ def fade(hls):
 
 def highlight(hls):
 	return lsMultiply(hls, 1.0, 1.0)
+
+# Define layout color settings
+layout_color = dict(
+	border_focus  = '#004d99',
+	border_normal = "#222222",
+	border_width  = 2,
+)
+
+# Define layouts
+layouts = [
+	layout.MonadTall(name="Tall",    **layout_color),
+	layout.Matrix(   name="Matrix",  **layout_color),
+	layout.Wmii(     name="Stack",   **layout_color),
+	layout.Zoomy(    name="Zoomy",   **layout_color),
+	layout.Max(      name="Full",    **layout_color),
+]
 
 def groupColors(group_screen, bar_screen, focus, windows, urgents):
 	if urgents:                return white,       (0, 0.6, 0)
@@ -212,11 +216,11 @@ def makeBar(screen):
 	widgets = [
 		# Groups
 		FlexibleGroupBox(formatGroup, font_size=12),
-		widget.Sep(**separator_settings),
+		widget.Spacer(length=8),
 
 		# Current layout
 		MultiTextBox(formatLayout, hooks=update_hooks, font_size=12),
-		widget.Sep(**separator_settings),
+		widget.Spacer(length=8),
 
 		# Current window
 		MultiTextBox(formatTitle, hooks=update_hooks, font_size=12),
@@ -236,29 +240,24 @@ def makeBar(screen):
 		widget.Image(filename="~/.config/qtile/icons/lan.png"),
 		widget.NetGraph(**graph_settings),
 		widget.Sep(**separator_settings),
-
-		# System tray
-		widget.Systray(),
-		widget.Spacer(length=8),
-
 	]
 
-	if battery_name is not None:
+	if screen == 0:
 		widgets.extend([
-			widget.BatteryIcon(**battery_icon_settings),
-			widget.Battery(**battery_settings),
+			# System tray
+			widget.Systray(),
+			widget.Spacer(length=8),
 		])
 
 	widgets.extend([
-		# System tray separator
-		widget.Sep(**separator_settings),
-
 		# Clock
-		widget.Clock(format='%a %d %b %Y %H:%M:%S', font='xft:monospace', fontsize=12),
+		widget.Clock(format='%a %d %b %Y %H:%M:%S', font='xft:monospace', fontsize=12, foreground='#ffaa00'),
 		widget.Spacer(length=8),
 	])
 
-	return bar.Bar(widgets, 20, background=toQtileColor(background(screenColor(screen))))
+	bg_color =  toQtileColor(background(screenColor(screen)))
+
+	return bar.Bar(widgets, 20, background=bg_color)
 
 # Define bars on screens
 screens = [
