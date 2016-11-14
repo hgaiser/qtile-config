@@ -286,7 +286,7 @@ bring_front_click          = False
 cursor_warp                = False
 floating_layout            = layout.Floating(**layout_color)
 auto_fullscreen            = False
-focus_on_window_activation = "smart"
+focus_on_window_activation = "focus"
 wmname                     = "LG3D" # Because Java is braindead.
 
 @hook.subscribe.client_new
