@@ -26,20 +26,21 @@ class Bind(object):
 	@staticmethod
 	def __arg(arg, qtile):
 		''' Preprocess an argument. '''
-		if arg is Bind.qtile return qtile
+		if arg is Bind.qtile: return qtile
 		return arg
 
 	@staticmethod
 	def __process_args(qtile, args, kwargs):
 		''' Preprocess arguments. '''
-		args   = [     Bind.__arg(x, qtile) for x        in self.__args]
-		kwargs = {key: Bind.__arg(x, qtile) for (key, x) in self.__kwargs.items()}
-		return args, kwargs
+		return (
+			[     Bind.__arg(x, qtile) for x        in args]
+			{key: Bind.__arg(x, qtile) for (key, x) in kwargs.items()}
+		)
 
 	def check(self, qtile):
 		# This is kind of a hack, implementing  the actual work in the check function.
 		# However, it is the easiest way to do this without defning an actual command.
-		args, kwargs = Bind._process_args(qtile, self.__args, self.__kwargs)
+		args, kwargs = Bind.__process_args(qtile, self.__args, self.__kwargs)
 		self.__functor(*args, **kwargs);
 		os.sys.stdout.flush()
 
