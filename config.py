@@ -138,9 +138,9 @@ def groupColors(group_screen, bar_screen, focus, windows, urgents):
 	if urgents:                return white,       (0, 0.6, 0)
 	if group_screen and focus: return white,       screenColor(group_screen.index)
 	if group_screen:           return fade(white), fade(screenColor(group_screen.index))
-	if windows and focus:      return black,       (0.0, 0.4, 0.0)
-	if windows:                return black,       fade((0.0, 0.4, 0.0))
-	return (0.0, 0.7, 0.0), background(screenColor(bar_screen.index))
+	if windows and focus:      return white,       (0.0, 0.4, 0.0)
+	if windows:                return white,       fade((0.0, 0.4, 0.0))
+	return (0.0, 0.9, 0.0), background(screenColor(bar_screen.index))
 
 def formatGroup(widget, group, qtile):
 	screen = widget.bar.screen
@@ -258,7 +258,7 @@ def makeBar(screen):
 
 	widgets.extend([
 		# Clock
-		widget.Clock(format='%a %d %b %Y %H:%M:%S', font='xft:monospace', fontsize=12, foreground='#ffaa00'),
+		widget.Clock(format='%a %d %b %Y %H:%M:%S', font='xft:monospace', fontsize=12, foreground='#ffffff'),
 		widget.Spacer(length=8),
 	])
 
