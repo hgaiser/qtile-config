@@ -216,11 +216,11 @@ def makeBar(screen):
 	widgets = [
 		# Groups
 		FlexibleGroupBox(formatGroup, font_size=12),
-		widget.Spacer(length=8),
+		widget.Sep(**separator_settings),
 
 		# Current layout
 		MultiTextBox(formatLayout, hooks=update_hooks, font_size=12),
-		widget.Spacer(length=8),
+		widget.Sep(**separator_settings),
 
 		# Current window
 		MultiTextBox(formatTitle, hooks=update_hooks, font_size=12),
@@ -253,7 +253,7 @@ def makeBar(screen):
 		widgets.extend([
 			# System tray
 			widget.Systray(),
-			widget.Spacer(length=8),
+			widget.Sep(**separator_settings),
 		])
 
 	widgets.extend([
