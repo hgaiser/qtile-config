@@ -33,7 +33,7 @@ class Bind(object):
 	def __process_args(qtile, args, kwargs):
 		''' Preprocess arguments. '''
 		return (
-			[     Bind.__arg(x, qtile) for x        in args]
+			[     Bind.__arg(x, qtile) for x        in args],
 			{key: Bind.__arg(x, qtile) for (key, x) in kwargs.items()}
 		)
 
