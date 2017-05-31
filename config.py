@@ -15,16 +15,26 @@ mod = "mod4"
 
 keys = [
 	# Switch between windows in current stack pane
-	Key([mod], "Right", lazy.layout.next()),
-	Key([mod], "Left", lazy.layout.previous()),
+	Key([mod], "Up", lazy.layout.up()),
+	Key([mod], "Down", lazy.layout.down()),
+	Key([mod], "Left", lazy.layout.left()),
+	Key([mod], "Right", lazy.layout.right()),
 
 	# Grow or shrink current window
-	Key([mod], "Up", lazy.layout.grow()),
-	Key([mod], "Down", lazy.layout.shrink()),
+	Key([mod, "control"], "Up", lazy.layout.grow()),
+	Key([mod, "control"], "Up", lazy.layout.grow_up()),
+	Key([mod, "control"], "Down", lazy.layout.shrink()),
+	Key([mod, "control"], "Down", lazy.layout.grow_down()),
+	Key([mod, "control"], "Left", lazy.layout.grow_left()),
+	Key([mod, "control"], "Right", lazy.layout.grow_right()),
 
 	# Move windows up or down in current stack
-	Key([mod, "shift"], "Right", lazy.layout.shuffle_down()),
-	Key([mod, "shift"], "Left", lazy.layout.shuffle_up()),
+	Key([mod, "shift"], "Up", lazy.layout.shuffle_up()),
+	Key([mod, "shift"], "Down", lazy.layout.shuffle_down()),
+	Key([mod, "shift"], "Right", lazy.layout.shuffle_right()),
+	Key([mod, "shift"], "Left", lazy.layout.shuffle_left()),
+
+	Key([mod], "z", lazy.layout.toggle_split()),
 
 	# Swap with main window
 	Key([mod, "shift"], "Return", lazy.layout.swap_main()),
@@ -34,6 +44,7 @@ keys = [
 
 	# Reset layout.
 	Key([mod, "shift"], "space", lazy.layout.reset()),
+	Key([mod, "shift"], "space", lazy.layout.normalize()),
 
 	# Move focus to screen
 	Key([mod], "w", lazy.to_screen(1)),
@@ -127,10 +138,8 @@ layout_color = dict(
 
 # Define layouts
 layouts = [
-	layout.MonadTall(name="Tall",    **layout_color),
-	layout.Matrix(   name="Matrix",  **layout_color),
-	layout.Wmii(     name="Stack",   **layout_color),
-	layout.Zoomy(    name="Zoomy",   **layout_color),
+	layout.Columns(  name="Columns", **layout_color, num_columns=2),
+	layout.TreeTab(  name="TreeTab", **layout_color),
 	layout.Max(      name="Full",    **layout_color),
 ]
 
